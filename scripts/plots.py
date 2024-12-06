@@ -16,6 +16,12 @@ def extract_block_number(exp_name):
 
 # 1. Gráfico de barras agrupado de accuracy train vs val
 def plot_accuracies(datos_experimentos):
+    """
+    Genera un gráfico de barras comparando accuracy de train vs validación.
+
+    Args:
+        datos_experimentos (dict): Diccionario con datos de los experimentos
+    """
     accuracies_data = []
     # Ordenar los experimentos por número de bloques
     sorted_experiments = sorted(datos_experimentos.items(), 
@@ -43,6 +49,12 @@ def plot_accuracies(datos_experimentos):
 
 # 2. Parámetros entrenables vs tiempo de entrenamiento
 def plot_params_vs_time(datos_experimentos):
+    """
+    Genera gráficos comparando parámetros entrenables y tiempo de entrenamiento.
+
+    Args:
+        datos_experimentos (dict): Diccionario con datos de los experimentos
+    """
     # Cargar resultados del JSON
     with open('results/beans/training_results_20241206_030322.json', 'r') as f:
         training_results = json.load(f)
@@ -223,10 +235,14 @@ def plot_overfitting_analysis(datos_experimentos):
 
 def plot_test_results(csv_path='results/beans/test_evaluation_results.csv'):
     """
-    Visualiza los resultados de la evaluación en el conjunto de test
-    
+    Visualiza los resultados de evaluación en el conjunto de test.
+
     Args:
-        csv_path: Ruta al archivo CSV con los resultados del test
+        csv_path (str, optional): Ruta al CSV con resultados. 
+            Por defecto 'results/beans/test_evaluation_results.csv'
+
+    Returns:
+        Figure: Figura de matplotlib con los gráficos generados
     """
     # Leer los datos
     df = pd.read_csv(csv_path)

@@ -13,7 +13,17 @@ from lightning_modules.restnet_module import ResNetTransferLearning
 from scripts.data_loader import get_datasets
 
 def load_trained_model(checkpoint_path: str, num_classes: int = 3) -> ResNetTransferLearning:
-    """Carga un modelo entrenado desde un checkpoint"""
+    """
+    Carga un modelo entrenado desde un archivo checkpoint.
+
+    Args:
+        checkpoint_path (str): Ruta al archivo checkpoint del modelo
+        num_classes (int, optional): Número de clases del modelo. Por defecto 3
+
+    Returns:
+        ResNetTransferLearning: Modelo cargado en modo evaluación
+
+    """
     model = ResNetTransferLearning(num_classes=num_classes)
     # Añadir map_location para manejar la carga en CPU si no hay GPU disponible
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -23,7 +33,19 @@ def load_trained_model(checkpoint_path: str, num_classes: int = 3) -> ResNetTran
     return model
 
 def evaluate_model(model: ResNetTransferLearning, test_loader, device: str = 'cuda'):
-    """Evalúa el modelo en el conjunto de test"""
+    """
+    Evalúa el modelo en el conjunto de prueba.
+
+    Args:
+        model (ResNetTransferLearning): Modelo a evaluar
+        test_loader: DataLoader con el conjunto de prueba
+        device (str, optional): Dispositivo donde ejecutar la evaluación. Por defecto 'cuda'
+
+    Returns:
+        tuple: Contiene:
+            - predictions (list): Lista de predicciones del modelo
+            - true_labels (list): Lista de etiquetas verdaderas
+    """
     model = model.to(device)
     predictions = []
     true_labels = []

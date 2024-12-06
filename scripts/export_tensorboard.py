@@ -4,6 +4,13 @@ import pandas as pd
 import argparse
 
 def export_tensorboard_data(log_dir, output_dir):
+    """
+    Exporta los datos de TensorBoard a archivos CSV.
+
+    Args:
+        log_dir (str): Directorio con los logs de TensorBoard
+        output_dir (str): Directorio donde guardar los archivos CSV exportados
+    """
     # Inicializar el acumulador de eventos
     ea = event_accumulator.EventAccumulator(log_dir)
     ea.Reload()
@@ -30,6 +37,13 @@ def export_tensorboard_data(log_dir, output_dir):
         print(f'Exportado {tag} a {output_file}')
 
 def process_beans_directory(base_dir, output_base_dir):
+    """
+    Procesa todos los subdirectorios de experimentos beans para exportar sus logs.
+
+    Args:
+        base_dir (str): Directorio base que contiene los experimentos
+        output_base_dir (str): Directorio base donde guardar las exportaciones
+    """
     # Iterar sobre todos los subdirectorios en el directorio beans
     for subdir in os.listdir(base_dir):
         subdir_path = os.path.join(base_dir, subdir)

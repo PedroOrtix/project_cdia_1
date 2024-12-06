@@ -24,6 +24,21 @@ def fine_tune_resnet(
     output_dir: str = 'results',
     freeze_blocks: int = 0
 ):
+    """
+    Realiza el fine-tuning de una ResNet pre-entrenada.
+
+    Args:
+        num_classes (int, optional): Número de clases para clasificación. Por defecto 90
+        batch_size (int, optional): Tamaño del batch. Por defecto 64
+        learning_rate (float, optional): Tasa de aprendizaje. Por defecto 3e-5
+        max_epochs (int, optional): Número máximo de épocas. Por defecto 30
+        num_workers (int, optional): Número de workers para data loading. Por defecto 4
+        output_dir (str, optional): Directorio para guardar resultados. Por defecto 'results'
+        freeze_blocks (int, optional): Número de bloques a congelar. Por defecto 0
+
+    Returns:
+        str: Ruta al mejor modelo guardado
+    """
     pl.seed_everything(42)
 
     # Crear directorios de salida

@@ -11,7 +11,20 @@ sys.path.append(str(project_root))
 from scripts.fine_tuning_function import fine_tune_resnet
 
 def train_model_with_config(freeze_blocks, base_config):
-    """Entrena un modelo con una configuración específica de freeze_blocks"""
+    """
+    Entrena un modelo con una configuración específica de bloques congelados.
+
+    Args:
+        freeze_blocks (int): Número de bloques a congelar
+        base_config (dict): Configuración base del entrenamiento
+
+    Returns:
+        dict: Diccionario con resultados del entrenamiento incluyendo:
+            - freeze_blocks: Bloques congelados
+            - best_model_path: Ruta al mejor modelo
+            - training_time: Tiempo de entrenamiento
+            - config: Configuración utilizada
+    """
     # Crear directorio específico para este experimento
     experiment_name = f"freeze_blocks_{freeze_blocks}"
     output_dir = Path(base_config["output_dir"]) / experiment_name

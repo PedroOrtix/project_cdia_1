@@ -4,6 +4,14 @@ from torchvision import transforms
 import torch
 
 class BeansDataset(Dataset):
+    """
+    Dataset personalizado para el conjunto de datos de plantas de frijol.
+
+    Args:
+        dataset: Dataset de HuggingFace con imágenes y etiquetas
+        transform (callable, optional): Transformaciones a aplicar a las imágenes
+
+    """
     def __init__(self, dataset, transform=None):
         self.dataset = dataset
         self.transform = transform
@@ -23,8 +31,13 @@ class BeansDataset(Dataset):
 
 def get_datasets():
     """
-    Carga y prepara los datasets de plantas de frijol de HuggingFace
-    Retorna: train_dataset, val_dataset, test_dataset
+    Carga y prepara los datasets de plantas de frijol desde HuggingFace.
+
+    Returns:
+        tuple: Contiene los siguientes datasets:
+            - train_dataset (BeansDataset): Dataset de entrenamiento
+            - val_dataset (BeansDataset): Dataset de validación  
+            - test_dataset (BeansDataset): Dataset de prueba
     """
     # Configuración de transformaciones
     transform = transforms.Compose([
