@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader
 from pathlib import Path
 
 from lightning_modules.restnet_module import ResNetTransferLearning
-from utils.data_loader import get_datasets
+from scripts.data_loader import get_datasets
 
 def fine_tune_resnet(
     num_classes: int = 90,

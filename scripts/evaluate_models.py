@@ -10,7 +10,7 @@ project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
 from lightning_modules.restnet_module import ResNetTransferLearning
-from utils.data_loader import get_datasets
+from scripts.data_loader import get_datasets
 
 def load_trained_model(checkpoint_path: str, num_classes: int = 3) -> ResNetTransferLearning:
     """Carga un modelo entrenado desde un checkpoint"""

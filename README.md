@@ -1,94 +1,97 @@
-# Análisis Comparativo de ResNet: Impacto del Número de Bloques en el Aprendizaje
+# Optimizar Clasificación de Beans mediante Congelamiento Selectivo en ResNet18
 
 ## 📋 Descripción
-Este proyecto investiga cómo el número de bloques residuales en una arquitectura ResNet afecta su capacidad de aprendizaje y rendimiento. Se realizan experimentos comparativos con diferentes configuraciones de ResNet para analizar la relación entre la profundidad de la red y su efectividad. Se trata de hacer un "over-skill" al problema de clasificación de plantas de frijol, para demostrar que no siempre un modelo más profundo es mejor ni aun congelando más bloques.
+Este proyecto investiga cómo el congelamiento selectivo de bloques en una arquitectura ResNet18 afecta su capacidad de aprendizaje y rendimiento en la tarea de clasificación de plantas de frijol. El objetivo es demostrar que no siempre es necesario entrenar todos los parámetros de un modelo preentrenado para obtener resultados óptimos, contribuyendo así a la democratización del deep learning mediante la optimización de recursos computacionales.
 
 ## 🎯 Objetivos
-- Comparar el rendimiento de ResNet con diferentes números de bloques residuales
-- Analizar la velocidad de convergencia en el entrenamiento
-- Evaluar la precisión final alcanzada por cada configuración
-- Identificar la relación óptima entre profundidad y rendimiento
+- Analizar el impacto del congelamiento selectivo de bloques en ResNet18
+- Evaluar la relación entre parámetros entrenables y rendimiento
+- Optimizar recursos computacionales sin comprometer el acierto
+- Demostrar la viabilidad de fine-tuning eficiente en tareas específicas
 
 ## 📁 Estructura del Proyecto
 ```
 project/
-├── lightning_modules/       # Módulos de PyTorch Lightning
-│   ├── __init__.py
-│   └── restnet_module.py    # Implementación de ResNet
-├── models/                  # Modelos guardados
-│   ���── checkpoints/        # Checkpoints durante el entrenamiento
-├── results/                # Resultados y métricas
-│   └── beans/             # Resultados específicos del dataset de frijoles
-├── scripts/                # Scripts de entrenamiento
-│   ├── fine_tuning_function.py
-│   └── train_beans.py
-├── utils/                  # Utilidades
-│   └── data_loader.py      # Funciones de carga de datos
-└── requirements.txt        # Dependencias del proyecto
+├── lightning_modules/          # Módulos de PyTorch Lightning para el modelo ResNet18
+├── notebooks/                  # Notebooks de análisis exploratorio
+├── results/                    # Resultados experimentales
+│   ├── beans/                 # Resultados por configuración de congelamiento (1-4 bloques)
+│   │   ├── csv_exports/       # Métricas exportadas de TensorBoard
+│   │   ├── checkpoints/       # Modelos guardados durante entrenamiento
+│   │   └── logs/             # Logs de TensorBoard
+│   └── plots/                 # Visualizaciones (accuracy, loss, convergencia, etc.)
+├── scripts/                    # Scripts principales
+│   ├── train_beans.py         # Script principal de entrenamiento
+│   ├── fine_tuning_function.py # Funciones de fine-tuning
+│   ├── evaluate_models.py     # Evaluación de modelos
+│   ├── data_loader.py        # Utilidades de carga de datos
+│   ├── export_tensorboard.py # Exportación de métricas
+│   └── plots.py              # Generación de visualizaciones
+├── report.md                  # Análisis detallado de resultados
+└── requirements.txt           # Dependencias del proyecto
 ```
 
 ## 🚀 Características Principales
 
-### ResNet Transfer Learning
-- Modelo base: ResNet18 pre-entrenado en ImageNet
-- Capacidad de congelar bloques selectivamente para transfer learning
-- Métricas implementadas:
-  - Accuracy (entrenamiento y validación)
-  - Pérdida (entrenamiento y validación)
-- Optimización:
-  - Optimizador: AdamW
-  - Learning Rate: 1e-4
+### Modelo Base: ResNet18
+- Arquitectura: ResNet18 preentrenada en ImageNet
+- Configuración flexible de congelamiento de bloques
+- Adaptación de la capa final para 3 clases (beans)
 
-### Dataset
-- Dataset: Beans de Hugging Face (AI-Lab-Makerere/beans)
-- 3 clases diferentes de plantas de frijol
-- Transformaciones de datos:
-  - Redimensionamiento a 224x224
-  - Normalización con medias y desviaciones estándar de ImageNet
+### Dataset: Beans (AI-Lab-Makerere)
+- 3 clases de plantas de frijol
+- Preprocesamiento:
+  - Redimensionamiento: 224x224 píxeles
+  - Normalización: mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+
+### Configuración de Entrenamiento
+- Batch size: 16
+- Learning rate: 1e-4
+- Optimizador: AdamW
+- Scheduler: ReduceLROnPlateau
+- Early stopping: patience=10
+- Max epochs: 30
 
 ## 💻 Uso
 
 ### Instalación
 ```bash
-# Clonar el repositorio
 git clone https://github.com/PedroOrtix/project_cdia_1.git
 cd project
-
-# Instalar dependencias
 pip install -r requirements.txt
 ```
 
 ### Entrenamiento
-```bash
-# Entrenar el modelo con configuración por defecto
-python scripts/train_beans.py
-
-# Los parámetros configurables incluyen:
-- num_classes: Número de clases (default: 3)
-- batch_size: Tamaño del batch (default: 16)
-- learning_rate: Tasa de aprendizaje (default: 1e-4)
-- max_epochs: Número máximo de épocas (default: 20)
-- freeze_blocks: Número de bloques a congelar (default: 4)
-- num_workers: Número de workers para data loading (default: 4)
+```python
+!python scripts/train_beans.py
 ```
 
-## 📊 Características del Entrenamiento
+### Evaluación
+```python
+!python scripts/evaluate_models.py
+```
 
-### Configuración del Modelo
-- **Arquitectura Base**: ResNet18
-- **Transfer Learning**: 
-  - Pesos pre-entrenados de ImageNet
-  - 4 bloques congelados por defecto
-  - Capa final adaptada a 3 clases
+## 📊 Monitoreo y Resultados
 
-### Optimización
-- **Optimizador**: AdamW
-- **Learning Rate**: 1e-4
-- **Batch Size**: 16
-- **Épocas Máximas**: 20
+### Métricas Implementadas
+- Accuracy (train/val/test)
+- Loss (train/val/test)
+- Parámetros entrenables vs congelados
+- Tiempo de entrenamiento
 
-### Resultados
-Los resultados del entrenamiento se guardan en:
-- Directorio: `results/beans/`
-- Formato: Archivos JSON y CSV con métricas y configuraciones
-- Timestamp: Cada experimento se guarda con marca de tiempo única
+### Visualizaciones
+- Curvas de aprendizaje
+- Análisis de convergencia
+- Estudio de overfitting
+- Comparativa de rendimiento por configuración
+
+### TensorBoard
+```bash
+tensorboard --logdir results/beans
+```
+
+## 📈 Resultados Principales
+- Rendimiento óptimo con hasta 3 bloques congelados (>95% accuracy)
+- Reducción significativa de parámetros entrenables sin pérdida notable de rendimiento
+- Convergencia rápida y estable en todas las configuraciones
+- Ausencia de overfitting significativo
