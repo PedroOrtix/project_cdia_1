@@ -24,6 +24,7 @@ class BeansDataset(Dataset):
 def get_datasets():
     """
     Carga y prepara los datasets de plantas de frijol de HuggingFace
+    Retorna: train_dataset, val_dataset, test_dataset
     """
     # Configuración de transformaciones
     transform = transforms.Compose([
@@ -39,5 +40,6 @@ def get_datasets():
     # Crear datasets de PyTorch
     train_dataset = BeansDataset(ds['train'], transform=transform)
     val_dataset = BeansDataset(ds['validation'], transform=transform)
+    test_dataset = BeansDataset(ds['test'], transform=transform)
     
-    return train_dataset, val_dataset
+    return train_dataset, val_dataset, test_dataset

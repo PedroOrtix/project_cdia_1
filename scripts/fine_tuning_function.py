@@ -33,7 +33,7 @@ def fine_tune_resnet(
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # Preparar datasets y dataloaders
-    train_dataset, val_dataset = get_datasets()
+    train_dataset, val_dataset, _ = get_datasets()
     
     train_loader = DataLoader(
         train_dataset,

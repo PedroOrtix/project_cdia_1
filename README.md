@@ -1,25 +1,13 @@
 # Análisis Comparativo de ResNet: Impacto del Número de Bloques en el Aprendizaje
 
 ## 📋 Descripción
-Este proyecto investiga cómo el número de bloques residuales en una arquitectura ResNet afecta su capacidad de aprendizaje y rendimiento. Se realizan experimentos comparativos con diferentes configuraciones de ResNet para analizar la relación entre la profundidad de la red y su efectividad.
+Este proyecto investiga cómo el número de bloques residuales en una arquitectura ResNet afecta su capacidad de aprendizaje y rendimiento. Se realizan experimentos comparativos con diferentes configuraciones de ResNet para analizar la relación entre la profundidad de la red y su efectividad. Se trata de hacer un "over-skill" al problema de clasificación de plantas de frijol, para demostrar que no siempre un modelo más profundo es mejor ni aun congelando más bloques.
 
 ## 🎯 Objetivos
 - Comparar el rendimiento de ResNet con diferentes números de bloques residuales
 - Analizar la velocidad de convergencia en el entrenamiento
 - Evaluar la precisión final alcanzada por cada configuración
 - Identificar la relación óptima entre profundidad y rendimiento
-
-## 🛠️ Requisitos
-```python
-pytorch-lightning>=2.0.0
-torch>=2.0.0
-torchvision>=0.15.0
-datasets>=2.0.0
-transformers>=4.0.0
-tensorboard>=2.0.0
-pillow>=8.0.0
-torchmetrics>=0.11.0
-```
 
 ## 📁 Estructura del Proyecto
 ```
@@ -63,7 +51,7 @@ project/
 ### Instalación
 ```bash
 # Clonar el repositorio
-git clone [URL_DEL_REPOSITORIO]
+git clone https://github.com/PedroOrtix/project_cdia_1.git
 cd project
 
 # Instalar dependencias
@@ -102,8 +90,5 @@ python scripts/train_beans.py
 ### Resultados
 Los resultados del entrenamiento se guardan en:
 - Directorio: `results/beans/`
-- Formato: Archivos JSON con métricas y configuraciones
+- Formato: Archivos JSON y CSV con métricas y configuraciones
 - Timestamp: Cada experimento se guarda con marca de tiempo única
-
-## 📝 Licencia
-Este proyecto está bajo la licencia [ESPECIFICAR_LICENCIA].

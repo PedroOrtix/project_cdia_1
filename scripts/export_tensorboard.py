@@ -29,15 +29,37 @@ def export_tensorboard_data(log_dir, output_dir):
         df.to_csv(output_file, index=False)
         print(f'Exportado {tag} a {output_file}')
 
+def process_beans_directory(base_dir, output_base_dir):
+    # Iterar sobre todos los subdirectorios en el directorio beans
+    for subdir in os.listdir(base_dir):
+        subdir_path = os.path.join(base_dir, subdir)
+        
+        # Verificar que sea un directorio
+        if os.path.isdir(subdir_path):
+            # Buscar el directorio de logs de tensorboard
+            tensorboard_dir = None
+            for root, dirs, files in os.walk(subdir_path):
+                if any(f.startswith('events.out.tfevents') for f in files):
+                    tensorboard_dir = root
+                    break
+            
+            if tensorboard_dir:
+                # Crear directorio de salida específico para este experimento
+                output_dir = os.path.join(output_base_dir, subdir, 'tensorboard_exports')
+                print(f'Procesando experimento: {subdir}')
+                export_tensorboard_data(tensorboard_dir, output_dir)
+            else:
+                print(f'No se encontraron logs de TensorBoard en {subdir_path}')
+
 def main():
     parser = argparse.ArgumentParser(description='Exportar datos de TensorBoard a CSV')
-    parser.add_argument('--logdir', type=str, required=True,
-                       help='Directorio de logs de TensorBoard')
+    parser.add_argument('--beans_dir', type=str, required=True,
+                       help='Directorio base de experimentos beans')
     parser.add_argument('--output', type=str, required=True,
-                       help='Directorio de salida para los archivos CSV')
+                       help='Directorio base de salida para los archivos CSV')
     
     args = parser.parse_args()
-    export_tensorboard_data(args.logdir, args.output)
+    process_beans_directory(args.beans_dir, args.output)
 
 if __name__ == '__main__':
     main() 
