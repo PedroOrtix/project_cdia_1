@@ -43,10 +43,9 @@ def main():
         "num_classes": 3,
         "batch_size": 16,
         "learning_rate": 1e-4,
-        "max_epochs": 20,
+        "max_epochs": 30,
         "num_workers": 4,
         "output_dir": "results/beans",
-        "val_split": 0.1
     }
     
     # Lista de configuraciones de freeze_blocks a probar

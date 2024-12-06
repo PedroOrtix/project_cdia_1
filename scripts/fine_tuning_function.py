@@ -16,14 +16,12 @@ from lightning_modules.restnet_module import ResNetTransferLearning
 from utils.data_loader import get_datasets
 
 def fine_tune_resnet(
-    data_dir: str = None, # no lo vamos a usar
     num_classes: int = 90,
     batch_size: int = 64,
     learning_rate: float = 3e-5,
     max_epochs: int = 30,
     num_workers: int = 4,
     output_dir: str = 'results',
-    val_split: float = 0.2, # no lo vamos a usar
     freeze_blocks: int = 0
 ):
     pl.seed_everything(42)
