@@ -121,3 +121,22 @@ class ResNetTransferLearning(pl.LightningModule):
                 "monitor": "val_loss"
             }
         }
+
+    def on_fit_start(self):
+        """Se ejecuta al inicio del entrenamiento"""
+        # Calcular parámetros entrenables
+        trainable_params = sum(p.numel() for p in self.parameters() if p.requires_grad)
+        total_params = sum(p.numel() for p in self.parameters())
+        frozen_params = total_params - trainable_params
+        
+        # Registrar en tensorboard
+        self.logger.experiment.add_scalar("model/trainable_parameters", trainable_params, 0)
+        self.logger.experiment.add_scalar("model/total_parameters", total_params, 0)
+        self.logger.experiment.add_scalar("model/frozen_parameters", frozen_params, 0)
+        
+        # Imprimir información
+        print(f"\nEstadísticas del modelo:")
+        print(f"- Parámetros totales: {total_params:,}")
+        print(f"- Parámetros entrenables: {trainable_params:,}")
+        print(f"- Parámetros congelados: {frozen_params:,}")
+        print(f"- Porcentaje entrenable: {(trainable_params/total_params)*100:.2f}%\n")

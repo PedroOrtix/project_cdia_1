@@ -40,17 +40,17 @@ def train_model_with_config(freeze_blocks, base_config):
 def main():
     # Configuración base
     base_config = {
-        "num_classes": 90,
-        "batch_size": 32,
-        "learning_rate": 3e-5,
-        "max_epochs": 30,
+        "num_classes": 3,
+        "batch_size": 16,
+        "learning_rate": 1e-4,
+        "max_epochs": 20,
         "num_workers": 4,
-        "output_dir": "results/animals",
+        "output_dir": "results/beans",
         "val_split": 0.1
     }
     
     # Lista de configuraciones de freeze_blocks a probar
-    freeze_blocks_configs = [0, 1, 2, 3, 4]
+    freeze_blocks_configs = [1, 2, 3, 4]
     
     # Crear directorio para resultados si no existe
     results_dir = Path(base_config["output_dir"])

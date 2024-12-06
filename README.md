@@ -24,17 +24,16 @@ torchmetrics>=0.11.0
 ## 📁 Estructura del Proyecto
 ```
 project/
-├── data/                    # Directorio para datasets
 ├── lightning_modules/       # Módulos de PyTorch Lightning
 │   ├── __init__.py
 │   └── restnet_module.py    # Implementación de ResNet
 ├── models/                  # Modelos guardados
-│   └── checkpoints/        # Checkpoints durante el entrenamiento
-├── notebooks/              # Jupyter notebooks para análisis
+│   ���── checkpoints/        # Checkpoints durante el entrenamiento
 ├── results/                # Resultados y métricas
+│   └── beans/             # Resultados específicos del dataset de frijoles
 ├── scripts/                # Scripts de entrenamiento
 │   ├── fine_tuning_function.py
-│   └── train_animals.py
+│   └── train_beans.py
 ├── utils/                  # Utilidades
 │   └── data_loader.py      # Funciones de carga de datos
 └── requirements.txt        # Dependencias del proyecto
@@ -46,17 +45,15 @@ project/
 - Modelo base: ResNet18 pre-entrenado en ImageNet
 - Capacidad de congelar bloques selectivamente para transfer learning
 - Métricas implementadas:
-  - Accuracy (entrenamiento, validación y prueba)
-  - Pérdida (entrenamiento, validación y prueba)
+  - Accuracy (entrenamiento y validación)
+  - Pérdida (entrenamiento y validación)
 - Optimización:
   - Optimizador: AdamW
-  - Learning Rate Scheduler: ReduceLROnPlateau
-  - Precisión mixta para optimización de memoria
+  - Learning Rate: 1e-4
 
 ### Dataset
-- Dataset: Animals de Hugging Face
-- 90 clases diferentes de animales
-- División automática en conjuntos de entrenamiento y validación
+- Dataset: Beans de Hugging Face (AI-Lab-Makerere/beans)
+- 3 clases diferentes de plantas de frijol
 - Transformaciones de datos:
   - Redimensionamiento a 224x224
   - Normalización con medias y desviaciones estándar de ImageNet
@@ -76,20 +73,15 @@ pip install -r requirements.txt
 ### Entrenamiento
 ```bash
 # Entrenar el modelo con configuración por defecto
-python scripts/train_animals.py
+python scripts/train_beans.py
 
 # Los parámetros configurables incluyen:
-- num_classes: Número de clases (default: 90)
-- batch_size: Tamaño del batch (default: 32)
-- learning_rate: Tasa de aprendizaje (default: 3e-5)
-- max_epochs: Número máximo de épocas (default: 30)
-- freeze_blocks: Número de bloques a congelar (default: 3)
-```
-
-### Monitoreo
-```bash
-# Visualizar métricas en TensorBoard
-tensorboard --logdir results/animals/logs
+- num_classes: Número de clases (default: 3)
+- batch_size: Tamaño del batch (default: 16)
+- learning_rate: Tasa de aprendizaje (default: 1e-4)
+- max_epochs: Número máximo de épocas (default: 20)
+- freeze_blocks: Número de bloques a congelar (default: 4)
+- num_workers: Número de workers para data loading (default: 4)
 ```
 
 ## 📊 Características del Entrenamiento
@@ -98,38 +90,20 @@ tensorboard --logdir results/animals/logs
 - **Arquitectura Base**: ResNet18
 - **Transfer Learning**: 
   - Pesos pre-entrenados de ImageNet
-  - Capacidad de congelar hasta 4 bloques
-  - Capa final adaptada a 90 clases
+  - 4 bloques congelados por defecto
+  - Capa final adaptada a 3 clases
 
 ### Optimización
 - **Optimizador**: AdamW
-- **Learning Rate**: 3e-5 (configurable)
-- **Scheduler**: ReduceLROnPlateau
-  - Factor de reducción: 0.5
-  - Paciencia: 3 épocas
-  - Monitoreo: val_loss
+- **Learning Rate**: 1e-4
+- **Batch Size**: 16
+- **Épocas Máximas**: 20
 
-### Callbacks
-- **Model Checkpoint**: Guarda los mejores modelos basados en val_loss
-- **Early Stopping**: Detiene el entrenamiento si no hay mejora
-- **TensorBoard Logger**: Registra métricas de entrenamiento
-
-## 📈 Métricas y Logging
-- **Métricas de Entrenamiento**:
-  - Loss (por paso y época)
-  - Accuracy (por paso y época)
-- **Métricas de Validación**:
-  - Loss
-  - Accuracy
-- **Visualización**: TensorBoard para seguimiento en tiempo real
-
-## 🤝 Contribuciones
-Las contribuciones son bienvenidas. Por favor, sigue estos pasos:
-1. Fork el repositorio
-2. Crea una rama para tu feature
-3. Commit tus cambios
-4. Push a la rama
-5. Abre un Pull Request
+### Resultados
+Los resultados del entrenamiento se guardan en:
+- Directorio: `results/beans/`
+- Formato: Archivos JSON con métricas y configuraciones
+- Timestamp: Cada experimento se guarda con marca de tiempo única
 
 ## 📝 Licencia
 Este proyecto está bajo la licencia [ESPECIFICAR_LICENCIA].
