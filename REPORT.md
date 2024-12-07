@@ -15,7 +15,7 @@ Esta tendencia hacia la democratización se refleja en el desarrollo de diversas
 - **Destilación de conocimiento** para crear modelos más compactos
 - **Cuantización de pesos** para reducir los requisitos de memoria y acelerar la inferencia
 
-En este contexto, nuestro estudio utiliza la ResNet18 como caso de estudio para demostrar que, mediante el congelamiento selectivo de capas, podemos reducir significativamente la cantidad de parámetros entrenables mientras mantenemos o mejoramos el rendimiento del modelo.
+En este contexto, el estudio utiliza la ResNet18 como caso de estudio para demostrar que, mediante el congelamiento selectivo de capas, podemos reducir significativamente la cantidad de parámetros entrenables mientras mantenemos o mejoramos el rendimiento del modelo.
 
 La optimización de recursos sin comprometer el rendimiento se ha convertido en un factor crucial para hacer que las soluciones de inteligencia artificial sean verdaderamente escalables y accesibles para todo el mundo, desde pequeñas empresas hasta aplicaciones de gran escala.
 
@@ -25,7 +25,7 @@ La optimización de recursos sin comprometer el rendimiento se ha convertido en 
 
 ### Dataset 📊
 
-El estudio utiliza el dataset "Beans" proporcionado por AI-Lab-Makerere a través de HuggingFace, que consiste en imágenes de plantas de frijol para clasificación. Los datos se procesan mediante una pipeline de transformaciones que incluye:
+El estudio utiliza el dataset "Beans" proporcionado por AI-Lab-Makerere a través de HuggingFace, que consiste en imágenes de plantas de frijol para clasificación. Los datos se procesan mediante un pipeline de transformaciones que incluye:
 
 - 🔄 Redimensionamiento de imágenes a 224x224 píxeles
 - 📊 Normalización utilizando los valores estándar de ImageNet:
