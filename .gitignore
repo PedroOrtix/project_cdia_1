@@ -1,3 +1,6 @@
 # vamos a ignoraar la carpeta de datasets
 data/
 results/beans/
+# Ignorar todos los archivos que contengan 'paper' en el nombre, excepto paper.pdf
+paper*
+!paper.pdf
